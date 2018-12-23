@@ -1,0 +1,218 @@
+/*  #2E9AFE  */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+* {
+  font-family:            'open-sans', sans-serif;
+}
+
+body {
+  margin:                 0px;
+}
+
+.button {
+  height:                 46px;
+  width:                  100%;
+  border:                 0px;
+  background-color:       #2E9AFE;
+  font-size:              18px;
+  font-weight:            bold;
+  color:                  #fff;
+}
+.button:hover {
+  background-color:       #000;
+}
+
+header {
+  width:                  100%;
+  height:                 100px;
+  margin:                 0px;
+  margin-bottom:          40px;
+  background-color:       #2E9AFE;
+}
+
+.main{
+  width:                  70%;
+  padding:                5px 10px 20px 10px;
+  position:               absolute;
+  margin-left:            15%;
+  z-index:                1;
+}
+
+td {
+  width:                  200px;
+}
+
+input {
+  width:                  98%;
+  margin-right:           5%;
+  margin-bottom:          10px;
+  padding:                10px;
+  font-size:              15px;
+}
+
+form table {
+  width:                  100%;
+}
+
+input[type='number'] {
+  -moz-appearance:        textfield;
+}
+
+h1{
+  margin-top:             0px;
+}
+
+a{
+  text-decoration:        none;
+  color:                  #000;
+}
+.EmuBackground a {
+  color:                  #fff;
+}
+
+a:hover {
+  text-decoration:        underline;
+}
+
+.EmuBackground {
+  /*background-image:       linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)),url("EmuBackground.jpeg");
+  background-size:        cover;
+  background-position:    center;
+  background-attachment:  fixed;
+  background-repeat:      no-repeat;*/
+  background-color:       #2E9AFE;
+  color:                  #fff;
+}
+
+.headerContent{
+  width:                  100%;
+  height:                 90px;
+  background-color:       #000;
+}
+
+.displayImage {
+  width :                 300px;
+  height:                 300px;
+  object-fit:             cover;
+}
+
+.logo {
+  height:                 90px;
+  padding:                5px 10px;
+  position:               absolute;
+  left:                   50%;
+  transform:              translate(-50%, 0);
+  background-color:       #000;
+}
+
+.half-input {
+  width:                  96%;
+}
+
+.menuImage {
+  height:                 40px;
+  width:                  50px;
+  position:               absolute;
+  padding:                20px;
+  padding-bottom:         40px;
+}
+.menu{
+  height:                 40px;
+  width:                  50px;
+  position:               absolute;
+}
+
+.menuItem {
+  list-style-type:        none;
+  margin-top:             100px;
+  padding:                0;
+  width:                  15%;
+  background-color:       #2E9AFE;
+  height:                 100%;
+  position:               fixed;
+  overflow:               auto;
+  display:                none;
+  z-index:                3;
+}
+
+
+.menu:hover > .menuItem{
+  display:                inline !important;
+}
+
+.menuItem li a {
+  display:                block;
+  color:                  #fff;
+  padding:                8px 16px;
+  text-decoration:        none !important;
+  font-weight:            bold;
+}
+
+.menuItem li a.active {
+  background-color:       #4CAF50;
+  color:                  white;
+}
+
+.menuItem li a:hover:not(.active) {
+  background-color:       #000;
+  color:                  white;
+}
+
+.tile-big {
+  width:                  100%;
+  height:                 100%;
+  object-fit:             cover;
+}
+
+.tile-big-div {
+  width:                  33%;
+  margin-left:            0.33333%;
+  height:                 220px;
+  float:                  left;
+  margin-bottom:          5px;
+  overflow:               hidden;
+}
+
+.tile-small {
+  width:                  100%;
+  height:                 100%;
+  object-fit:             cover;
+}
+
+.tile-small-div {
+  width:                  24.6666%;
+  margin-left:            0.33333%;
+  height:                 180px;
+  float:                  left;
+  margin-bottom:          10px;
+  overflow:               hidden;
+}
+
+.tile-big:hover, .tile-small:hover {
+  animation:              hover;
+  animation-duration:     400ms;
+  animation-fill-mode:    forwards;
+  overflow:               hidden;
+}
+
+@keyframes hover {
+  form {
+    filter:               brightness(100%);
+  }
+
+  to{
+    filter:               brightness(50%);
+    transform:            scale(1.1);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .menuItem {
+    width:                100%;
+  }
+
+  .tile-big-div, .tile-small-div {
+    width:                100%;
+    margin-bottom:        1px;
+  }
+}

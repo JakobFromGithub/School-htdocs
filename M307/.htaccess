@@ -1,0 +1,2 @@
+ErrorDocument 404 /M307/404.php
+Redirect /Hinrichtungen.html https://www.youtube.com/watch?v=dQw4w9WgXcQ
