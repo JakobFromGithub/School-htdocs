@@ -12,34 +12,28 @@
 	<body>
 		<nav>
 			<?php
-			if(isset($_POST['deleteSession']) && $_POST['deleteSession'] == "true"){
-				_end();
-			}
-			if(isset($_SESSION['username'])){
-				echo '
-				<form method="post" class="login hidden">
-					<p class="login">Hallo ' . $_SESSION['username'] . ', schön dich zu sehen!</p>
-					<button type="submit" name="deleteSession" value="true">ausloggen</button>
-				</form>';
-			}
+				displayNav();
 			?>
 		</nav>
 		<!-- Main -->
-		<div id="main">
-			<div class="inner">
-				<div class="columns">
+		<div id="main" class="grid-container">
 					<?php
+						$columnCounter = 1;
 						$activeImages = array();
-						$activeTable = readDB("SELECT pk FROM `images` WHERE active = 1 ");
+						$activeTable = readDB("SELECT pk, fileEnding FROM `images` WHERE active = 1 ");
 
 						while ($row = $activeTable->fetch_assoc()) {
-							echo '<div class="image fit" >';//style="background-image:url(images/pic' . $row['pk'] . '.jpg);"
-							echo '<img src="images/pic'.$row['pk'].'.jpg" alt="">';
+
+							echo '<div class="grid-detail image" >';//image grid-detail
+							echo '<img src="images/pic'.$row['pk'].'.' . $row['fileEnding']. '" alt="">';
 							echo '</div>';
+
 						}
 					?>
-				</div>
-			</div>
 		</div>
 	</body>
 </html>
+<!--.('< Linux is better than windows  -->
+<!--./V\ -->
+<!--<(_) -->
+<!--.~~ -->
