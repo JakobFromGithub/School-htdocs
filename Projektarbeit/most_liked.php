@@ -22,7 +22,7 @@
 				<?php
 					$columnCounter = 1;
 					$activeImages = array();
-					$activeTable = readDB("SELECT pk, fileEnding FROM `images` WHERE active = 1 ");
+					$activeTable = readDB("SELECT pk, fileEnding FROM `images` WHERE active = 1 ORDER BY likes DESC ");
 					$allPK = readDB("SELECT pk FROM `images`");
 
 					while($row = $allPK->fetch_assoc()){
@@ -62,7 +62,3 @@
 		</form>
 	</body>
 </html>
-<!--.('< Linux is better than windows  -->
-<!--./V\ -->
-<!--<(_) -->
-<!--.~~ -->

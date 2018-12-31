@@ -20,9 +20,10 @@
   				_end();
           header('Location: login.php');
   			}
+
   			if(isset($_SESSION['username'])){
   				echo '
-  				<form method="post" class="login center">
+  				<form method="post" class="login">
   					<p>Hallo ' . $_SESSION['username'] . ', willst du jetzt schon gehen?</p>
   					<button type="submit" name="deleteSession" value="true">ausloggen</button>
   				</form>';
@@ -36,6 +37,7 @@
       if(isset($_POST['username'])){
         $postUsername = $_POST['username'];
       }
+      
       if(isset($_POST['password'])){
         $postPassword = $_POST['password'];
       }

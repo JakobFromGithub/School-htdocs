@@ -28,22 +28,24 @@
 				displayNav();
 			?>
 		</nav>
-		<div id="main" class="grid-container">
-
-<!--
-<form>
-	<tr>
-		<td colspan="2">
-			<button name="deleteFoto" value="true">löschen </button>
-		</td>
-	</tr>
-</form>
--->
-
+		<p class="tipp"><span style="color:#2EBA2B">active</span> <span style="color:grey">inactive</span></p>
+		<form method="post">
+			<div id="main" class="edit-grid-container">
 				<?php
+					$allPK = readDB("SELECT pk, fileEnding FROM `images`");
+
+					while ($row = $allPK->fetch_assoc()) {
+
+						if(isset($_POST['delete_' . $row['pk']]) && $_POST['delete_' . $row['pk']] == "delete") {
+							writeDB('DELETE FROM `images` WHERE pk = "' . $row['pk'] . '"');
+							unlink('images/pic' . $row['pk'] . '.' . $row['fileEnding']);
+						}
+					}
+
 					$updateActive = readDB("SELECT pk, active FROM `images`");
 
 					while ($row = $updateActive->fetch_assoc()) {
+
 						if(isset($_POST['active_pic' . $row['pk']]) && !($_POST['active_pic' . $row['pk']] == $row['active'])) {//
 							writeDB('UPDATE `images` SET `active` = '. $_POST['active_pic' . $row['pk']] .' WHERE `images`.`pk` = ' . $row['pk']);
 						}
@@ -63,25 +65,16 @@
 						 	$ischecked = "checked";
 					 	}
 
-						echo '<div class="grid-detail">
-										<div class="image">
-											<img src="images/pic' . $row['pk'] . '.' . $row['fileEnding'] . '"' . $class . ' alt="">
-										</div>
-										<form method="post" class="active-overlay">
-											<table>
-												<tr>
-													<td>active:</td>
-													<td>
-														<input type="hidden" name="active_pic'. $row['pk'] . '" value="0" />
-														<input type="checkbox" name="active_pic'. $row['pk'] . '" value="1" onchange="this.form.submit()" ' . $ischecked . '/>
-													</td>
-												</tr>
-											</table>
-										</form>
+						echo '<div class="grid-detail image">
+										<img src="images/pic' . $row['pk'] . '.' . $row['fileEnding'] . '"' . $class . ' alt="">
+										<input type="hidden" name="active_pic'. $row['pk'] . '" value="0" />
+										<input class="invisilbe_checkbox" type="checkbox" name="active_pic'. $row['pk'] . '" value="1" ' . $ischecked . '/>
+										<button class="delete_button" type="submit"name="delete_' . $row['pk'] . '" value="delete">löschen<button>
 									</div>';
 					}
 				?>
+				<button class="save_Button_8" type="submit" name="commit" value="true">Speichern</button>
 			</div>
-		</div>
+		</form>
 	</body>
 </html>
