@@ -2,7 +2,9 @@
 <?php
 	require("Functions.php");
 	session_start();
+	$SQLcon = new sql();
 
+	/* Überprüft login */
 	if(isset($_POST['username']) && isset($_POST['password'])
 		&& validateLogin($_POST['username'], $_POST['password']) == "true"){
 			$_SESSION['username'] = $_POST['username'];
@@ -10,7 +12,7 @@
 			$_POST['password'] = "";
 	}
 
-
+	/* Weist nicht eingeloggte user ab */
 	if(!isset($_SESSION['username']) || !($_SESSION['username'] == "admin")){
 		header('Location: login.php');
 		die();
@@ -32,27 +34,28 @@
 		<form method="post">
 			<div id="main" class="edit-grid-container">
 				<?php
-					$allPK = readDB("SELECT pk, fileEnding FROM `images`");
+				  /* Variablen */
+					$allPK = $SQLcon->readDB("SELECT pk, fileEnding FROM `images`");
+					$updateActive = $SQLcon->readDB("SELECT pk, active FROM `images`");
+					$activeTable = $SQLcon->readDB("SELECT pk, fileEnding, active FROM `images`");
 
+					/* löscht ausgewählte Bilder */
 					while ($row = $allPK->fetch_assoc()) {
-
 						if(isset($_POST['delete_' . $row['pk']]) && $_POST['delete_' . $row['pk']] == "delete") {
-							writeDB('DELETE FROM `images` WHERE pk = "' . $row['pk'] . '"');
+							$SQLcon->writeDB('DELETE FROM `images` WHERE pk = "' . $row['pk'] . '"');
 							unlink('images/pic' . $row['pk'] . '.' . $row['fileEnding']);
 						}
 					}
 
-					$updateActive = readDB("SELECT pk, active FROM `images`");
-
+					/* ändert ob Bidler aktiv sind */
 					while ($row = $updateActive->fetch_assoc()) {
-
-						if(isset($_POST['active_pic' . $row['pk']]) && !($_POST['active_pic' . $row['pk']] == $row['active'])) {//
-							writeDB('UPDATE `images` SET `active` = '. $_POST['active_pic' . $row['pk']] .' WHERE `images`.`pk` = ' . $row['pk']);
+						if(isset($_POST['active_pic' . $row['pk']]) && !($_POST['active_pic' . $row['pk']] == $row['active'])) {
+							$SQLcon->writeDB('UPDATE `images` SET `active` = '. $_POST['active_pic' . $row['pk']] .' WHERE `images`.`pk` = ' . $row['pk']);
 						}
 					}
 
-					$activeTable = readDB("SELECT pk, fileEnding, active FROM `images`");
 
+					/* Zeigt Bilder an */
 					while ($row = $activeTable->fetch_assoc()) {
 						$class = "";
 						$ischecked = "";
@@ -73,6 +76,7 @@
 									</div>';
 					}
 				?>
+
 				<button class="save_Button_8" type="submit" name="commit" value="true">Speichern</button>
 			</div>
 		</form>

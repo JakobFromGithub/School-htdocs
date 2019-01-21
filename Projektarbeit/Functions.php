@@ -1,37 +1,41 @@
 <?php
 
-  // Everything DB related
-  function readDB($sql) {
-    $connection = mysqli_connect("localhost","root","","fotoblock");
+  class sql{
+    // Everything DB related
+    function readDB($sql) {
+      $connection = mysqli_connect("localhost","root","","fotoblock");
 
-    if($connection){
-      $result = mysqli_query($connection, $sql);
-      $connection->close();
+      if($connection){
+        $result = mysqli_query($connection, $sql);
+        $connection->close();
+      }
+      return $result;
     }
-    return $result;
+
+    function writeDB($sql) {
+      $connection = mysqli_connect("localhost","root","","fotoblock");
+
+      if($connection){
+        $connection->query($sql);
+        $connection->close();
+      }
+    }
+
+    function getIdWriteDB($sql) {
+      $connection = mysqli_connect("localhost","root","","fotoblock");
+      $last_id = "";
+
+      if($connection){
+        $connection->query($sql);
+        $last_id = mysqli_insert_id($connection);
+        $connection->close();
+      }
+      return $last_id;
+    }
   }
 
-  function writeDB($sql) {
-    $connection = mysqli_connect("localhost","root","","fotoblock");
 
-    if($connection){
-      $connection->query($sql);
-      $connection->close();
-    }
-  }
-
-  function getIdWriteDB($sql) {
-    $connection = mysqli_connect("localhost","root","","fotoblock");
-    $last_id = "";
-
-    if($connection){
-      $connection->query($sql);
-      $last_id = mysqli_insert_id($connection);
-      $connection->close();
-    }
-    return $last_id;
-  }
-
+  // Hash : CRYPT_BLOWFISH
   function validateLogin($username, $password) {
     if($username != "" && $password != ""){
       $connection = mysqli_connect("localhost","root","","fotoblock");
@@ -50,6 +54,7 @@
     }
     return "false";
   }
+
 
   /* GET / POST / SESSION  */
 

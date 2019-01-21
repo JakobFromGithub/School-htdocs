@@ -2,7 +2,9 @@
 <?php
   require('Functions.php');
   session_start();
+	$SQLcon = new sql();
 
+  /* Logged user ein */
   if(isset($_POST['username']) && isset($_POST['password'])
   	   && validateLogin($_POST['username'], $_POST['password']) == "true"){
 			$_SESSION['username'] = $_POST['username'];
@@ -10,6 +12,7 @@
 			$_POST['password'] = "";
 	}
 
+  /* Weist nicht eingeloggte user ab */
 	if(!isset($_SESSION['username']) || !($_SESSION['username'] == "admin")){
 		header('Location: login.php');
 		die();
@@ -29,6 +32,7 @@
         $Dir = "images/";
         $allowTypes = array('jpg','png','jpeg','gif');
 
+        /* falls keine bilder im Freigebeorder sind */
         if(dir_is_empty('tmp_images/')){
 
           echo '
@@ -42,6 +46,8 @@
             <input type="submit" name="submit" value="Hochladen" class="fill-width">
 
             <ul class="message_Board">';
+
+          /* Diesen teil habe ich aus einem alten Projekt von mir (nur das if) */
 
           if(isset($_POST['submit']) && !empty($_FILES['files'])) {
 
@@ -63,7 +69,7 @@
                 }
 
                 /* doesn't exist already */
-                if(mysqli_num_rows(readDB('SELECT pk FROM `images` WHERE hash = "' . $hash . '"')) > 0){
+                if(mysqli_num_rows($SQLcon->readDB('SELECT pk FROM `images` WHERE hash = "' . $hash . '"')) > 0){
                   echo "<li>Bild existiert schon!</li>";
                   $uploadOk = false;
                 }
@@ -94,6 +100,7 @@
           </ul>
         </form>';
         }else {
+          /* Falls Bilder Hochladen wurden, aber nicht freigegeben werden */
 
           if(!isset($_POST['commit'])){
 
@@ -101,7 +108,7 @@
             <form method="post">
               <dir class="upload-grid-container">';
             foreach (scandir('tmp_images') as $file) {
-              
+
               if($file !== '.' && $file !== '..' ){
                 $fileWOExtention = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file);
 
@@ -119,6 +126,7 @@
             </form>';
           }else {
 
+            /* Zeigt alle nicht freigegeben dateien an */
             foreach (scandir('tmp_images') as $file) {
 
               if($file !== '.' && $file !== '..' ){
@@ -131,7 +139,7 @@
                   $active = 1;
                 }
 
-                $ID = getIdWriteDB('INSERT INTO `images` (`fileEnding`, `likes`, `active`, `hash`) VALUES ( "' . $extiention . '" , "0", "' . $active . '", "' . $hash . '" )');
+                $ID = $SQLcon->getIdWriteDB('INSERT INTO `images` (`fileEnding`, `likes`, `active`, `hash`) VALUES ( "' . $extiention . '" , "0", "' . $active . '", "' . $hash . '" )');
                 rename('tmp_images/' . $file, 'images/pic' . $ID . '.' . $extiention);
                 header('location: edit.php');
               }

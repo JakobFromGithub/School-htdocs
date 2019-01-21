@@ -2,6 +2,7 @@
 <?php
   require("functions.php");
   session_start();
+	$SQLcon = new sql();
 ?>
 <html>
   <head>
@@ -16,11 +17,13 @@
     <?php
     if(isset($_SESSION['username'])){
 
+        /* logged aus */
         if(isset($_POST['deleteSession']) && $_POST['deleteSession'] == "true"){
   				_end();
           header('Location: login.php');
   			}
 
+        /* zeigt logout form an */
   			if(isset($_SESSION['username'])){
   				echo '
   				<form method="post" class="login">
@@ -37,11 +40,12 @@
       if(isset($_POST['username'])){
         $postUsername = $_POST['username'];
       }
-      
+
       if(isset($_POST['password'])){
         $postPassword = $_POST['password'];
       }
 
+      /* Zeigt login Formular an */
       echo'
         <form method="POST" action="edit.php" class="login center">
           <label>username</label>

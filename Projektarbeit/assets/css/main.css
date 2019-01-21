@@ -436,7 +436,7 @@
      .main-grid-container {
        grid-template-columns: 80vw;
        grid-auto-rows: 80vw;
-       width: 73vw;
+       width: 80vw;
      }
 
      .edit-grid-container {
